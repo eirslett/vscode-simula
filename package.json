@@ -3,8 +3,13 @@
   "displayName": "Simula",
   "description": "Simula language support",
   "version": "0.0.1",
+  "publisher": "eirslett",
   "engines": {
     "vscode": "^1.92.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eirslett/vscode-simula.git"
   },
   "scripts": {
     "build": "tsc",
@@ -39,8 +44,8 @@
       {
         "id": "simula",
         "icon": {
-          "light": "./simula-icon.svg",
-          "dark": "./simula-icon.svg"
+          "light": "./simula-icon.png",
+          "dark": "./simula-icon.png"
         },
         "aliases": [
           "Simula",
