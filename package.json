@@ -1,0 +1,69 @@
+{
+  "name": "vscode-simula",
+  "displayName": "Simula",
+  "description": "Simula language support",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "prettier --check ."
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./out/extension.js",
+  "devDependencies": {
+    "@types/vscode": "^1.92.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.runSimulaFile",
+        "title": "Run Simula File in Terminal"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.runSimulaFile",
+          "when": "resourceExtname == '.sim'",
+          "group": "execution"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "simula",
+        "icon": {
+          "light": "./simula-icon.svg",
+          "dark": "./simula-icon.svg"
+        },
+        "aliases": [
+          "Simula",
+          "simula"
+        ],
+        "extensions": [
+          ".sim"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "simula",
+        "scopeName": "source.sim",
+        "path": "./syntaxes/simula.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "simula",
+        "path": "./snippets.json"
+      }
+    ]
+  }
+}

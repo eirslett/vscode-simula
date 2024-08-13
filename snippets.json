@@ -1,0 +1,7 @@
+{
+  "Begin Block": {
+    "prefix": ["begin", "beg"],
+    "body": ["begin", "\t$0", "end"],
+    "description": "Inserts a begin-end block with cursor inside"
+  }
+}

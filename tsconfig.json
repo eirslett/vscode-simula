@@ -1,0 +1,11 @@
+// boilerplate tsconfig. Node.js. Input src/* and output out/*
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "outDir": "out",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
