@@ -2,7 +2,7 @@
   "name": "vscode-simula",
   "displayName": "Simula",
   "description": "Simula language support",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "eirslett",
   "engines": {
     "vscode": "^1.92.0"
