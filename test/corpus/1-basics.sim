@@ -1,0 +1,39 @@
+% This is a directive (shown as a comment)
+! This is a comment;
+comment This is a comment;
+begin
+    integer a;
+    boolean b;
+    text str;
+    character c;
+    ref(BaseClass) something;
+
+    ! numbers;
+    a := 0;
+    a := -1;
+    a := 2&1;
+    a := 2.0&+1;
+    a := .2&2;
+    a := 20.0;
+    a := 200&-1;
+    a := 2.345_678&&0;
+    a := 2R1010;
+    a := 16RFFFE;
+    a := 8r76501;
+    a := 16R000a;
+
+    ! booleans;
+    b := true;
+    b := false;
+
+    ! strings;
+    str :- "hello";
+    str :- "!test;";
+    str :- "Hello" " " "World";
+    outtext(str);
+
+    ! characters;
+    c := 'H';
+    C := '!111!';
+    C := '''; -- edge-case (single quote)
+end-this is a comment;

@@ -1,0 +1,9 @@
+-- This style of dash-dash comment syntax is not originally part of the Simula Standard.
+begin
+    --comment 1
+    outtext("Hello"); --comment 2
+    -- comment 3
+
+    ! unicode is allowed;
+    こんにちは := "🥳";
+end

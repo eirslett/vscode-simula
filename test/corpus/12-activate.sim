@@ -1,0 +1,8 @@
+begin
+    activate Spaceship;
+    activate Power before Engine;
+    activate Alarm after Fire;
+    activate Notification delay 6.5;
+    activate Music delay 6.5 prior;
+    activate NightMode at 23;
+end;

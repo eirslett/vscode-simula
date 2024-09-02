@@ -13,11 +13,13 @@ export function activate(context: vscode.ExtensionContext) {
       // Send the command to run the Simula file in the terminal
       // Expect output executable to be without the ".sim" extension, remove with regex
       const binary = filePath.replace(/\.sim$/, "");
-      terminal.sendText(`gnucim ${filePath} --output="${binary}" && ${binary}`);
+      terminal.sendText(
+        `gnucim "${filePath}" --output="${binary}" && "${binary}"`
+      );
 
       // Show the terminal
       terminal.show();
-    },
+    }
   );
 
   context.subscriptions.push(disposable);

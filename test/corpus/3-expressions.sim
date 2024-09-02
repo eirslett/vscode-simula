@@ -1,0 +1,23 @@
+BEGIN
+    ! variables;
+    Foo := Bar.Cat;
+    MyArray(1) := 1;
+
+    ! boolean expressions;
+    a := 1 < 2;
+    a := 5 lt 6;
+    b := x =/= y;
+    c := 1 < 2 and then 3 < 4;
+    d := 1 < 2 or else 3 < 4;
+    negative := not true;
+
+    ! arithmetic expressions;
+    total := 1 + 2 ** 2 / (pi - 7);
+
+    ! object expressions;
+    obj :- none;
+    o :- new MyClass;
+    o :- new MyClass2(1, 2, 3);
+
+    x := y qua MyClass2;
+End

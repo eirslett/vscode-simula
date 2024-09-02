@@ -1,0 +1,57 @@
+begin
+    abc:
+    def:
+    fanfare:
+    outtext("TADA");
+
+    ! Compound statement;
+    MyClass begin
+        outtext("Hello");
+    end-with-endcomment;
+
+    MyClass2(1, 2, 3) begin
+        outtext("Hello");
+    end-with-weekend;
+
+    DoSomething:
+    input.sub(7,3) := "Tom";
+
+    ! Conditional statement;
+    result := if true then "Yes" else "No";
+
+    if false then begin
+        outtext("No");
+    end;
+
+    if true then
+        outtext("yes")
+    else
+        outtext("nope")
+
+    if true then
+    else
+        outtext("nope")
+
+    ! While statement;
+    while false do begin outtext("will not run"); end;
+
+    ! For statement;
+    for a := 1 step 1 until 10 do outtext("yes");
+
+    ! Goto statement;
+    goto DoSomething;
+    go to DoSomething;
+
+    ! Procedure statements;
+    RunFunction;
+    RunFunction2(1, 2, 3);
+    a.b(1);
+    A.someprocedure(1).getint;
+    (t1).putchar ('3');
+
+    ! Connection statements;
+    inspect B
+        when B2 do S2
+        when B3 do S3
+otherwise begin S4 end;
+end

@@ -4,8 +4,8 @@
     "target": "ESNext",
     "module": "CommonJS",
     "outDir": "out",
-    "rootDir": "src",
     "strict": true,
     "esModuleInterop": true
-  }
+  },
+  "include": ["src/**/*"]
 }

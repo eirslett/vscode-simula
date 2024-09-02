@@ -1,0 +1,38 @@
+BEGIN
+    ! variables;
+    BOOLEAN a;
+    short integer b, c;
+    short comment test; integer d;
+    real e;
+    long real f;
+    text g;
+    ref(MyClass) h, i, j;
+
+    ! arrays;
+    integer array a(2:20);
+
+    ! switch;
+    switch s := s1,s2,q(m);
+
+    ! procedures;
+    procedure hello;
+    begin
+        OutText("Hello, world!");
+    end;
+
+    integer procedure hello2(a, b);
+    integer a, b;
+    begin
+        hello2 := a + b + 1;
+    end;
+
+    ! classes;
+    class MyClass(A);
+    integer A;
+    begin outint(A, 4); end;
+
+    ! externals;
+    external class b, c;
+    external procedure c, d;
+    external PHP procedure hello="uhmwhat" is procedure hello;;
+END
