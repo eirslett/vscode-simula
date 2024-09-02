@@ -19,6 +19,9 @@
       "include": "#boolean_expression"
     },
     {
+      "include": "#external_class_declaration"
+    },
+    {
       "include": "#number"
     },
     {
@@ -41,6 +44,9 @@
     },
     {
       "include": "#ref_types"
+    },
+    {
+      "include": "#object_expression"
     },
     {
       "include": "#conditional_statement"
@@ -70,9 +76,6 @@
       "include": "#class_declaration"
     },
     {
-      "include": "#external_class_declaration"
-    },
-    {
       "include": "#compound_statement"
     },
     {
@@ -80,6 +83,9 @@
     },
     {
       "include": "#misc_keywords"
+    },
+    {
+      "include": "#builtin_functions"
     },
     {
       "include": "#variable"
@@ -105,7 +111,7 @@
               "include": "#string"
             },
             {
-              "match": "\\b\\p{L}[\\p{L}0-9]*\\b",
+              "match": "\\b\\p{L}[\\p{L}0-9_]*\\b",
               "name": "entity.name.function"
             }
           ],
@@ -119,11 +125,11 @@
           }
         },
         {
-          "begin": "(?i)(external)\\s+(\\p{L}[\\p{L}0-9]*)\\s+(procedure)\\s+",
+          "begin": "(?i)(external)\\s+(\\p{L}[\\p{L}0-9_]*)\\s+(procedure)\\s+",
           "end": ";",
           "patterns": [
             {
-              "match": "\\b(\\p{L}[\\p{L}0-9]*)\\s*=\\s*(\"[^\"]*\")",
+              "match": "\\b(\\p{L}[\\p{L}0-9_]*)\\s*=\\s*(\"[^\"]*\")",
               "captures": {
                 "1": {
                   "name": "entity.name.function"
@@ -184,7 +190,7 @@
     "assignment_statement": {
       "patterns": [
         {
-          "match": "(\\p{L}[\\p{L}0-9]*)\\s*:=\\s*",
+          "match": "(\\p{L}[\\p{L}0-9_]*)\\s*:[=-]\\s*",
           "captures": {
             "1": {
               "name": "variable"
@@ -198,6 +204,37 @@
         {
           "match": "(?i)(\\band\\s+then\\b|\\bor\\s+else\\b|\\blt\\b|\\ble\\b|\\beq\\b|\\bge\\b|\\bgt\\b|\\bne\\b|\\bin\\b|\\bnot\\b|\\band\\b|\\bor\\b|\\bimp\\b|\\beqv\\b|\\bqua\\b)",
           "name": "keyword.operator"
+        }
+      ]
+    },
+    "external_class_declaration": {
+      "patterns": [
+        {
+          "begin": "(?i)(external)\\s+(class)\\s+",
+          "end": ";",
+          "patterns": [
+            {
+              "include": "#directive"
+            },
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#string"
+            },
+            {
+              "match": "\\b\\p{L}[\\p{L}0-9_]*\\b",
+              "name": "entity.name.class"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.external"
+            },
+            "2": {
+              "name": "keyword.other.class"
+            }
+          }
         }
       ]
     },
@@ -243,7 +280,7 @@
     "label": {
       "patterns": [
         {
-          "match": "(\\p{L}[\\p{L}0-9]*)\\s*:",
+          "match": "(\\p{L}[\\p{L}0-9_]*)\\s*:",
           "name": "label",
           "captures": {
             "1": {
@@ -272,7 +309,7 @@
     "ref_types": {
       "patterns": [
         {
-          "match": "\\b(?i)(ref)\\s*\\((\\p{L}[\\p{L}0-9]*)\\)",
+          "match": "\\b(?i)(ref)\\s*\\((\\p{L}[\\p{L}0-9_]*)\\)",
           "name": "storage.modifier",
           "captures": {
             "1": {
@@ -280,6 +317,21 @@
             },
             "2": {
               "name": "entity.name.class"
+            }
+          }
+        }
+      ]
+    },
+    "object_expression": {
+      "patterns": [
+        {
+          "match": "\\b(?i)(this)\\s+(\\p{L}[\\p{L}0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.this"
+            },
+            "2": {
+              "name": "variable"
             }
           }
         }
@@ -319,7 +371,7 @@
     "goto_statement": {
       "patterns": [
         {
-          "match": "\\b(?i)(goto|go\\s+to)\\s+(\\p{L}[\\p{L}0-9]*)\\b",
+          "match": "\\b(?i)(goto|go\\s+to)\\s+(\\p{L}[\\p{L}0-9_]*)\\b",
           "captures": {
             "1": {
               "name": "keyword.control.goto"
@@ -334,7 +386,7 @@
     "procedure_statement": {
       "patterns": [
         {
-          "begin": "\\b(\\p{L}[\\p{L}0-9]*)\\s*(\\()",
+          "begin": "\\b(\\p{L}[\\p{L}0-9_]*)\\s*(\\()",
           "beginCaptures": {
             "1": {
               "name": "entity.name.function"
@@ -358,6 +410,12 @@
             },
             {
               "include": "#procedure_statement"
+            },
+            {
+              "include": "#object_expression"
+            },
+            {
+              "include": "#conditional_statement"
             },
             {
               "include": "#number"
@@ -384,7 +442,7 @@
     "object_generator": {
       "patterns": [
         {
-          "match": "\\b(?i)(new)\\s+\\b(\\p{L}[\\p{L}0-9]*)",
+          "match": "\\b(?i)(new)\\s+\\b(\\p{L}[\\p{L}0-9_]*)",
           "captures": {
             "1": {
               "name": "keyword.control.new"
@@ -395,7 +453,7 @@
           }
         },
         {
-          "begin": "\\b(?i)(new)\\s+\\b(\\p{L}[\\p{L}0-9]*)\\s*(\\()",
+          "begin": "\\b(?i)(new)\\s+\\b(\\p{L}[\\p{L}0-9_]*)\\s*(\\()",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.new"
@@ -419,6 +477,12 @@
             },
             {
               "include": "#procedure_statement"
+            },
+            {
+              "include": "#object_expression"
+            },
+            {
+              "include": "#conditional_statement"
             },
             {
               "include": "#number"
@@ -445,7 +509,7 @@
     "connection_statement": {
       "patterns": [
         {
-          "match": "(?i)\\b(when)\\s+(\\p{L}[\\p{L}0-9]*)\\b",
+          "match": "(?i)\\b(when)\\s+(\\p{L}[\\p{L}0-9_]*)\\b",
           "captures": {
             "1": {
               "name": "keyword.control.when"
@@ -553,7 +617,45 @@
     "class_declaration": {
       "patterns": [
         {
-          "begin": "(?i)(class)\\s*([A-z][A-z0-9_]*)?",
+          "begin": "(?i)(\\p{L}[\\p{L}0-9_]*)\\s+(class)\\s*(\\p{L}[\\p{L}0-9_]*)?",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.class"
+            },
+            "2": {
+              "name": "keyword.other.class"
+            },
+            "3": {
+              "name": "entity.name.class"
+            }
+          },
+          "end": ";",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.terminator.statement"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "\\(",
+              "end": "\\)",
+              "patterns": [
+                {
+                  "include": "#directive"
+                },
+                {
+                  "include": "#comments"
+                },
+                {
+                  "match": "\\b\\p{L}[\\p{L}0-9_]*\\b",
+                  "name": "variable.parameter"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "begin": "(?i)(class)\\s*(\\p{L}[\\p{L}0-9_]*)?",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.class"
@@ -580,7 +682,7 @@
                   "include": "#comments"
                 },
                 {
-                  "match": "\\b\\p{L}[\\p{L}0-9]*\\b",
+                  "match": "\\b\\p{L}[\\p{L}0-9_]*\\b",
                   "name": "variable.parameter"
                 }
               ]
@@ -589,41 +691,10 @@
         }
       ]
     },
-    "external_class_declaration": {
-      "patterns": [
-        {
-          "begin": "(?i)(external)\\s+(class)\\s+",
-          "end": ";",
-          "patterns": [
-            {
-              "include": "#directive"
-            },
-            {
-              "include": "#comments"
-            },
-            {
-              "include": "#string"
-            },
-            {
-              "match": "\\b\\p{L}[\\p{L}0-9]*\\b",
-              "name": "entity.name.class"
-            }
-          ],
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.other.external"
-            },
-            "2": {
-              "name": "keyword.other.class"
-            }
-          }
-        }
-      ]
-    },
     "compound_statement": {
       "patterns": [
         {
-          "match": "\\b(\\p{L}[\\p{L}0-9]*)\\s*(?i)(begin)\\b",
+          "match": "\\b(\\p{L}[\\p{L}0-9_]*)\\s*(?i)(begin)\\b",
           "captures": {
             "1": {
               "name": "entity.name.class"
@@ -738,6 +809,10 @@
           "name": "keyword.other.ref"
         },
         {
+          "match": "(?i)(\\bthis\\b)",
+          "name": "keyword.other.this"
+        },
+        {
           "match": "(?i)(\\bnew\\b)",
           "name": "keyword.other.new"
         },
@@ -779,12 +854,20 @@
         }
       ]
     },
+    "builtin_functions": {
+      "patterns": [
+        {
+          "match": "(?i)(\\boutimage\\b)",
+          "name": "entity.name.function"
+        }
+      ]
+    },
     "variable": {
-      "match": "\\b\\p{L}[\\p{L}0-9]*\\b",
+      "match": "\\b\\p{L}[\\p{L}0-9_]*\\b",
       "name": "variable"
     },
     "identifier": {
-      "match": "\\b\\p{L}[\\p{L}0-9]*\\b",
+      "match": "\\b\\p{L}[\\p{L}0-9_]*\\b",
       "name": "entity.other"
     }
   }

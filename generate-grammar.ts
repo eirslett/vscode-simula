@@ -1,6 +1,6 @@
 // Script to generate the tmLanguage.json file.
 // The easiest way to run this script, is with Bun.
-// (Just run `bun generate-grammar.ts`.)
+// (Just run `bun generate-grammar.ts`.
 import fs from "fs/promises";
 
 interface MapLike<T> {
@@ -93,7 +93,7 @@ addPattern("directive", {
   ],
 });
 
-const IDENTIFIER = "\\p{L}[\\p{L}0-9]*";
+const IDENTIFIER = "\\p{L}[\\p{L}0-9_]*";
 const STRING = '"[^"]*"';
 
 function wordBoundary(pattern: string) {
@@ -225,6 +225,8 @@ addPattern("ref_types", {
 // Chapter 3: Expressions
 
 const expressionPatterns = [
+  include("object_expression"),
+  include("conditional_statement"),
   include("number"),
   include("string"),
   include("character"),
@@ -232,20 +234,29 @@ const expressionPatterns = [
   include("boolean"),
   include("variable"),
 ];
-/*
-addPattern("expression", {
+
+addPattern("object_expression", {
   patterns: [
-    
+    {
+      match: "\\b(?i)(this)\\s+(" + IDENTIFIER + ")",
+      captures: {
+        "1": {
+          name: "keyword.other.this",
+        },
+        "2": {
+          name: "variable",
+        },
+      },
+    },
   ],
 });
-*/
 
 // Chapter 4 Statements
 addPattern("assignment_statement", {
   priority: 1,
   patterns: [
     {
-      match: "(" + IDENTIFIER + ")\\s*:=\\s*",
+      match: "(" + IDENTIFIER + ")\\s*:[=-]\\s*",
       captures: {
         "1": {
           name: "variable",
@@ -572,10 +583,49 @@ addPattern("procedure_declaration", {
 });
 
 // 5.5 Class declarations
+const baseClassDeclaration = {
+  end: ";",
+  endCaptures: {
+    "1": {
+      name: "punctuation.terminator.statement",
+    },
+  },
+  patterns: [
+    {
+      // match the arguments
+      begin: "\\(",
+      end: "\\)",
+      patterns: [
+        include("directive"),
+        include("comments"),
+        {
+          match: wordBoundary(IDENTIFIER),
+          name: "variable.parameter",
+        },
+      ],
+    },
+  ],
+};
+
 addPattern("class_declaration", {
   patterns: [
     {
-      begin: "(?i)(class)\\s*([A-z][A-z0-9_]*)?",
+      begin: "(?i)(" + IDENTIFIER + ")\\s+(class)\\s*(" + IDENTIFIER + ")?",
+      beginCaptures: {
+        "1": {
+          name: "entity.name.class",
+        },
+        "2": {
+          name: "keyword.other.class",
+        },
+        "3": {
+          name: "entity.name.class",
+        },
+      },
+      ...baseClassDeclaration,
+    },
+    {
+      begin: "(?i)(class)\\s*(" + IDENTIFIER + ")?",
       beginCaptures: {
         "1": {
           name: "keyword.other.class",
@@ -584,33 +634,14 @@ addPattern("class_declaration", {
           name: "entity.name.class",
         },
       },
-      end: ";",
-      endCaptures: {
-        "1": {
-          name: "punctuation.terminator.statement",
-        },
-      },
-      patterns: [
-        {
-          // match the arguments
-          begin: "\\(",
-          end: "\\)",
-          patterns: [
-            include("directive"),
-            include("comments"),
-            {
-              match: wordBoundary(IDENTIFIER),
-              name: "variable.parameter",
-            },
-          ],
-        },
-      ],
+      ...baseClassDeclaration,
     },
   ],
 });
 
 // 6: External
 addPattern("external_class_declaration", {
+  priority: 1,
   patterns: [
     {
       begin: "(?i)(external)\\s+(class)\\s+",
@@ -731,6 +762,7 @@ addPattern("misc_keywords", {
   priority: -1,
   patterns: [
     "ref",
+    "this",
     "new",
     "class",
     "inner",
@@ -748,6 +780,17 @@ addPattern("misc_keywords", {
 });
 
 // MISC
+
+// Since these are built-in, we know for sure that they
+// are functions, not variables.
+addPattern("builtin_functions", {
+  priority: -1,
+  patterns: ["outimage"].map((keyword) => ({
+    match: token(keyword),
+    name: "entity.name.function",
+  })),
+});
+
 addPattern("variable", {
   priority: -1,
   match: wordBoundary(IDENTIFIER),
